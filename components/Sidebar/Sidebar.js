@@ -12,16 +12,22 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CgProfile, CgHomeAlt, CgArrowsExchange } from "react-icons/cg";
+import {
+  CgProfile,
+  CgArrowsExchange,
+  CgShoppingCart,
+  CgHome,
+} from "react-icons/cg";
 import { BsChatLeftDots } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { GiTrade } from "react-icons/gi";
 
 const LinkItems = [
   { name: "Profile", icon: CgProfile },
-  { name: "Market Place", icon: CgHomeAlt },
-  { name: "Trade", icon: CgArrowsExchange },
-  { name: "Message", icon: BsChatLeftDots },
+  { name: "Marketplace", icon: CgShoppingCart },
+  { name: "Requests", icon: CgArrowsExchange },
+  { name: "Messages", icon: BsChatLeftDots },
+  { name: "My Items", icon: CgHome },
 ];
 const Sidebar = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,9 +62,9 @@ const Sidebar = ({ children }) => {
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
-      bg={useColorModeValue("white", "gray.900")}
-      borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      bg={useColorModeValue("gray.100", "gray.900")}
+      // borderRight="1px"
+      // borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
