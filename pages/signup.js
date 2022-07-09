@@ -50,14 +50,19 @@ const SignUp = () => {
           name: values.name,
         });
       });
-      router.push("/");
+      router.push("/marketplace");
     } catch (err) {
       console.log(err.message);
     }
   };
 
   return (
-    <Flex flexDirection="column" alignItems="center">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
       <Stack
         flexDir="column"
         mb="2"
