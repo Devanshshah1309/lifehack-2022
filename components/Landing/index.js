@@ -8,10 +8,13 @@ import {
   Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useAuth } from "../../context/AuthContext";
 
 export default function CallToActionWithIllustration() {
+  const { user, logout } = useAuth();
+
   return (
-    <Container maxW={"5xl"} mt="10">
+    <Container maxW={"5xl"} mt="10" bg="whitesmoke">
       <Stack
         textAlign={"center"}
         align={"center"}
@@ -54,8 +57,9 @@ export default function CallToActionWithIllustration() {
             colorScheme={"teal"}
             bg={"teal.400"}
             _hover={{ bg: "teal.500" }}
+            onClick={user ? () => logout() : () => {}}
           >
-            <Link href="/login">Log in</Link>
+            {user ? "Sign out" : <Link href="/login">Log in</Link>}
           </Button>
           <Button rounded={"full"} px={6}>
             Learn more

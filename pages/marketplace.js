@@ -1,5 +1,5 @@
 import Sidebar from "../components/Sidebar/Sidebar";
-import { Box, Flex, VStack, Heading, Text } from "@chakra-ui/react";
+import { Box, Flex, VStack, Heading, Text, HStack } from "@chakra-ui/react";
 import Items from "../components/Items/Items";
 import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState } from "react";
@@ -40,15 +40,15 @@ export default function Marketplace() {
   return (
     <Flex>
       <Sidebar />
-      <VStack paddingLeft={10} width="100%" height="100%">
+      <VStack paddingLeft={10} width="100%">
         <Heading m="5">
           Welcome to the Marketplace,{" "}
           <Text color="teal.500" display={"inline-block"}>
             {userData?.name && userData.name}
           </Text>
         </Heading>
-        <Text fontSize="2xl">
-          Below, you can see all the items available for you to trade.
+        <Text fontSize="xl">
+          Below you can see all the items available for you to trade.
         </Text>
         <Items />
       </VStack>
