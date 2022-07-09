@@ -40,10 +40,7 @@ const SocialButton = ({ children, label, href }) => {
 
 export default function SmallCentered() {
   return (
-    <Box
-      bg={useColorModeValue("gray.200", "gray.900")}
-      color={useColorModeValue("gray.700", "gray.200")}
-    >
+    <Box color={useColorModeValue("gray.700", "gray.200")} mt="10">
       <Container
         as={Stack}
         maxW={"6xl"}
@@ -57,9 +54,8 @@ export default function SmallCentered() {
           <Heading color="teal.500">TradeEats</Heading>
         </Flex>
         <Stack direction={"row"} spacing={6}>
-          <Link href={"/"}>Home</Link>
+          <Link href={"/"}>Marketplace</Link>
           <Link href={"/"}>About</Link>
-          <Link href={"/"}>Blog</Link>
           <Link href={"/"}>Contact</Link>
         </Stack>
       </Container>

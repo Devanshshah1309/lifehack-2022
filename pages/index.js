@@ -1,15 +1,16 @@
-import Example from "../components/Example";
 import Footer from "../components/Footer";
-
+import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
+import WithSubnavigation from "../components/Navbar";
 
 export default function Home() {
   const { user } = useAuth();
   const [email, setEmail] = useState(null);
   const [registered, setRegistered] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const getUserInformation = async () => {
@@ -29,9 +30,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <Example />
+    <>
+      <WithSubnavigation />
       <Footer />
-    </div>
+    </>
   );
 }
