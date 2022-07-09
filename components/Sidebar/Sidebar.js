@@ -21,16 +21,18 @@ import {
 import { BsChatLeftDots } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { GiTrade } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 const LinkItems = [
-  { name: "Profile", icon: CgProfile },
-  { name: "Marketplace", icon: CgShoppingCart },
+  { name: "Profile", icon: CgProfile, path: "/profile" },
+  { name: "Marketplace", icon: CgShoppingCart, path: "marketplace" },
   { name: "Requests", icon: CgArrowsExchange },
   { name: "Messages", icon: BsChatLeftDots },
-  { name: "My Items", icon: CgHome },
+  { name: "My Items", icon: CgHome, path: "myitems" },
 ];
 const Sidebar = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   return (
     <Box minH="100vh">
       <SidebarContent
@@ -78,7 +80,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} path={link.path}>
           {link.name}
         </NavItem>
       ))}
@@ -86,10 +88,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children, path, ...rest }) => {
   return (
     <Link
-      href="#"
+      href={path === undefined ? "#" : path}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
