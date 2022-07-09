@@ -39,7 +39,7 @@ const Login = () => {
   const handleLoginClick = async (values) => {
     try {
       await login(values.email, values.password);
-      router.push("/");
+      router.push("/marketplace");
     } catch (err) {
       console.log(err.message);
     }

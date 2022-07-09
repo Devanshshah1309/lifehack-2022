@@ -14,7 +14,7 @@ import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
 import CallToActionWithIllustration from "../Landing";
 import { GiTrade } from "react-icons/gi";
 
-const Links = ["MarketPlace", "About", "Contact"];
+const Links = ["About", "Contact"];
 
 const NavLink = ({ children }) => (
   <Link
