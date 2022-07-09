@@ -18,7 +18,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
 import Link from "next/link";
 
-const Links = ["MarketPlace", "About", "Contact"];
+const Links = ["About", "Contact"];
 
 const NavLink = ({ children }) => (
   <Link
