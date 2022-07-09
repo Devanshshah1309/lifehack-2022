@@ -12,7 +12,6 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import CallToActionWithIllustration from "../Landing";
 import { GiTrade } from "react-icons/gi";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { db } from "../../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
@@ -39,7 +38,6 @@ export default function withAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const getUserInformation = async () => {
