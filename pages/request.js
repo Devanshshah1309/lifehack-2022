@@ -1,0 +1,88 @@
+import {
+  TabList,
+  TabPanel,
+  Tab,
+  Tabs,
+  TabPanels,
+  Flex,
+} from "@chakra-ui/react";
+import RequestItemCard from "../components/RequestItem/RequestItemCard";
+import Sidebar from "../components/Sidebar/Sidebar";
+
+export default function Request() {
+  // get all items from firebase
+  const items = [
+    {
+      name: "Apples",
+      expiry: "14/07/2022",
+      owner: "John",
+      requestor: "Tom",
+      status: 0,
+    },
+    {
+      name: "Banana",
+      expiry: "14/07/2022",
+      owner: "John",
+      requestor: "Tom",
+      status: 1,
+    },
+    {
+      name: "Watermelon",
+      expiry: "14/07/2022",
+      owner: "Tom",
+      requestor: "John",
+      status: 1,
+    },
+    {
+      name: "Orange",
+      expiry: "14/07/2022",
+      owner: "Tom",
+      requestor: "John",
+      status: 0,
+    },
+  ];
+
+  return (
+    <Flex>
+      <Sidebar />
+      <Tabs isFitted variant="solid-rounded" width="100%">
+        <TabList mb="1em">
+          <Tab>Ongoing Requests</Tab>
+          <Tab>Completed Requests</Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel>
+            {items.map(
+              (item, index) =>
+                item.status == 0 && (
+                  <RequestItemCard
+                    key={index}
+                    name={item.name}
+                    expiryDate={item.expiry}
+                    owner={item.owner}
+                    requestor={item.requestor}
+                    status={item.status}
+                  />
+                )
+            )}
+          </TabPanel>
+          <TabPanel>
+            {items.map(
+              (item, index) =>
+                item.status == 1 && (
+                  <RequestItemCard
+                    key={index}
+                    name={item.name}
+                    expiryDate={item.expiry}
+                    owner={item.owner}
+                    requestor={item.requestor}
+                    status={item.status}
+                  />
+                )
+            )}
+          </TabPanel>
+        </TabPanels>
+      </Tabs>
+    </Flex>
+  );
+}
