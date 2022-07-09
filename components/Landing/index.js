@@ -42,8 +42,10 @@ export default function CallToActionWithIllustration() {
           know you're not going to be able to finish it.
         </Text>
         <Text as="b" fontSize="xl">
-          Our mission is crystal clear.{" "}
-          <Text color={"teal.500"}>SAVE FOOD, SAVE THE WORLD.</Text>
+          Our mission is clear.{" "}
+          <Text color={"teal.500"} fontWeight={800} fontSize="2xl">
+            SAVE FOOD. SAVE. THE. WORLD.
+          </Text>
         </Text>
         <Stack spacing={6} direction={"row"}>
           <Button

@@ -8,8 +8,6 @@ export default function RequestItemCard({
   requestor,
   status,
 }) {
-  const img = require("../../assets/fruits.jpeg");
-
   const { user } = useAuth();
   const isOwner = user.name == owner;
 
@@ -29,38 +27,26 @@ export default function RequestItemCard({
     console.log("Cancel the request");
   };
 
-  console.log(name, expiryDate, requestor, owner);
-
   return (
     <Box
-      bg={
-        isOwner
-          ? useColorModeValue("teal.100", "gray.800")
-          : useColorModeValue("blue.100", "gray.800")
-      }
       margin="6px"
       padding="6px"
       borderWidth="1px"
-      rounded="lg"
-      shadow="lg"
       position="relative"
       width="100%"
     >
-      <Flex justifyContent="space-between">
-        <Box>
-          <Text color={"gray.500"} fontSize={"sm"}>
-            Item Name: {name}
-          </Text>
-          <Text color={"gray.500"} fontSize={"sm"}>
-            Expiry Date: {expiryDate}
+      <Flex flexDirection="column">
+        <Box display={"flex"} flexDirection="column" alignItems={"center"}>
+          <Text color={"black.500"} fontSize={"md"}>
+            {name} expiring on <b>{expiryDate}</b>
           </Text>
           {isOwner && (
-            <Text color={"gray.500"} fontSize={"sm"}>
+            <Text color={"black.500"} fontSize={"sm"}>
               Requestor: {requestor}
             </Text>
           )}
           {!isOwner && (
-            <Text color={"gray.500"} fontSize={"sm"}>
+            <Text color={"black.500"} fontSize={"sm"}>
               Owner: {owner}
             </Text>
           )}
@@ -68,23 +54,23 @@ export default function RequestItemCard({
 
         {status == 0 && isOwner && (
           <Box>
-            <Button color="green" margin="3px" onClick={handleAccept}>
+            <Button color="green" onClick={handleAccept}>
               Accept
             </Button>
-            <Button color="red" margin="3px" onClick={handleReject}>
+            <Button color="red" onClick={handleReject}>
               Reject
             </Button>
           </Box>
         )}
         {status == 0 && !isOwner && (
-          <Box>
-            <Button color="blue" margin="3px" onClick={handleOpenChat}>
+          <Flex justifyContent={"end"}>
+            <Button colorScheme="teal" size="sm" m="1" onClick={handleOpenChat}>
               Chat
             </Button>
-            <Button color="red" margin="3px" onClick={handleCancel}>
+            <Button color="red" size="sm" m="1" onClick={handleCancel}>
               Cancel
             </Button>
-          </Box>
+          </Flex>
         )}
       </Flex>
     </Box>

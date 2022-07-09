@@ -6,11 +6,19 @@ import {
   Flex,
   Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  Portal,
+  PopoverArrow,
+  PopoverContent,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
+  PopoverFooter,
 } from "@chakra-ui/react";
 import {
   CgProfile,
@@ -22,13 +30,15 @@ import { BsChatLeftDots } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { GiTrade } from "react-icons/gi";
 import { useRouter } from "next/router";
+import Request from "../RequestItem";
+import Link from "next/link";
 
 const LinkItems = [
   { name: "Profile", icon: CgProfile, path: "/profile" },
-  { name: "Marketplace", icon: CgShoppingCart, path: "marketplace" },
+  { name: "Marketplace", icon: CgShoppingCart, path: "/marketplace" },
   { name: "Requests", icon: CgArrowsExchange },
-  { name: "Messages", icon: BsChatLeftDots },
-  { name: "My Items", icon: CgHome, path: "myitems" },
+  { name: "Messages", icon: BsChatLeftDots, path: "/messages" },
+  { name: "My Items", icon: CgHome, path: "/myitems" },
 ];
 const Sidebar = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -62,15 +72,30 @@ const Sidebar = ({ children }) => {
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box w={{ base: "full", md: 60 }} pos="fixed" h="full" {...rest}>
-      <Flex alignItems="center" justifyContent="start" m="6">
-        <Icon as={GiTrade} boxSize="2rem" color="teal.500" m="2" />
-        <Text fontSize="2xl" color="teal.500" fontWeight="bold">
-          TradeEats
-        </Text>
-        <CloseButton display={{ base: "auto", md: "none" }} onClick={onClose} />
-      </Flex>
+      <Link href="/">
+        <Flex
+          alignItems="center"
+          justifyContent="start"
+          m="6"
+          _hover={{ pointer: "cursor", textDecoration: "none" }}
+        >
+          <Icon as={GiTrade} boxSize="2rem" color="teal.500" m="2" />
+          <Text fontSize="2xl" color="teal.500" fontWeight="bold">
+            TradeEats
+          </Text>
+          <CloseButton
+            display={{ base: "auto", md: "none" }}
+            onClick={onClose}
+          />
+        </Flex>
+      </Link>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon} path={link.path}>
+        <NavItem
+          key={link.name}
+          name={link.name}
+          icon={link.icon}
+          path={link.path}
+        >
           {link.name}
         </NavItem>
       ))}
@@ -78,8 +103,49 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, path, ...rest }) => {
-  return (
+const NavItem = ({ name, icon, children, path, ...rest }) => {
+  return name === "Requests" ? (
+    <Popover placement="right" arrowSize={20} colorScheme="teal" closeOnEsc>
+      <PopoverTrigger>
+        <Flex
+          align="center"
+          p="4"
+          mx="4"
+          borderRadius="lg"
+          role="group"
+          cursor="pointer"
+          _hover={{
+            bg: "teal.500",
+            color: "white",
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon
+              mr="4"
+              fontSize="16"
+              _groupHover={{
+                color: "white",
+              }}
+              as={icon}
+            />
+          )}
+          {children}
+        </Flex>
+      </PopoverTrigger>
+      <Portal>
+        <PopoverContent>
+          <PopoverArrow />
+          <PopoverHeader>Notifications</PopoverHeader>
+          <PopoverCloseButton />
+          <PopoverBody>
+            <Request />
+          </PopoverBody>
+          <PopoverFooter>Save food, save the world.</PopoverFooter>
+        </PopoverContent>
+      </Portal>
+    </Popover>
+  ) : (
     <Link
       href={path === undefined ? "#" : path}
       style={{ textDecoration: "none" }}

@@ -5,6 +5,7 @@ import {
   Tabs,
   TabPanels,
   Flex,
+  Container,
 } from "@chakra-ui/react";
 import RequestItemCard from "../components/RequestItem/RequestItemCard";
 import Sidebar from "../components/Sidebar/Sidebar";
@@ -45,44 +46,57 @@ export default function Request() {
   return (
     <Flex>
       <Sidebar />
-      <Tabs isFitted variant="solid-rounded" width="100%">
-        <TabList mb="1em">
-          <Tab>Ongoing Requests</Tab>
-          <Tab>Completed Requests</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel>
-            {items.map(
-              (item, index) =>
-                item.status == 0 && (
-                  <RequestItemCard
-                    key={index}
-                    name={item.name}
-                    expiryDate={item.expiry}
-                    owner={item.owner}
-                    requestor={item.requestor}
-                    status={item.status}
-                  />
-                )
-            )}
-          </TabPanel>
-          <TabPanel>
-            {items.map(
-              (item, index) =>
-                item.status == 1 && (
-                  <RequestItemCard
-                    key={index}
-                    name={item.name}
-                    expiryDate={item.expiry}
-                    owner={item.owner}
-                    requestor={item.requestor}
-                    status={item.status}
-                  />
-                )
-            )}
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <Container width="4xl" height="100vh">
+        <Tabs
+          size="sm"
+          variant="line"
+          width="100%"
+          boxShadow="lg"
+          colorScheme="teal.500"
+          align="center"
+        >
+          <TabList m="3">
+            <Tab _selected={{ color: "white", bg: "teal.500" }}>
+              Ongoing Requests
+            </Tab>
+            <Tab _selected={{ color: "white", bg: "teal.500" }}>
+              Completed Requests
+            </Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              {items.map(
+                (item, index) =>
+                  item.status == 0 && (
+                    <RequestItemCard
+                      key={index}
+                      name={item.name}
+                      expiryDate={item.expiry}
+                      owner={item.owner}
+                      requestor={item.requestor}
+                      status={item.status}
+                    />
+                  )
+              )}
+            </TabPanel>
+            <TabPanel>
+              {items.map(
+                (item, index) =>
+                  item.status == 1 && (
+                    <RequestItemCard
+                      key={index}
+                      name={item.name}
+                      expiryDate={item.expiry}
+                      owner={item.owner}
+                      requestor={item.requestor}
+                      status={item.status}
+                    />
+                  )
+              )}
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Container>
     </Flex>
   );
 }
