@@ -14,16 +14,19 @@ import {
   FormErrorMessage,
   InputRightElement,
 } from "@chakra-ui/react";
-import { FaUserAlt, FaLock } from "react-icons/fa";
+import { FaUserAlt, FaLock, FaPen } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { GiTrade } from "react-icons/gi";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { doc, setDoc, Timestamp } from "firebase/firestore";
+import { db } from "../firebase/config";
 
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
+const CFaPen = chakra(FaPen);
 
-const Login = () => {
+const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { signup } = useAuth();
   const router = useRouter();
@@ -34,9 +37,19 @@ const Login = () => {
   } = useForm();
 
   const handleShowClick = () => setShowPassword(!showPassword);
+
   const handleSignupClick = async (values) => {
+    console.log(values);
     try {
-      await signup(values.email, values.password);
+      await signup(values.email, values.password).then((userCredential) => {
+        const user = userCredential.user;
+        setDoc(doc(db, "users", user.uid), {
+          email: user.email,
+          registeredAt: Timestamp.fromDate(new Date()),
+          postal: values.postal,
+          name: values.name,
+        });
+      });
       router.push("/");
     } catch (err) {
       console.log(err.message);
@@ -61,9 +74,49 @@ const Login = () => {
               spacing={4}
               p="1rem"
               backgroundColor="whiteAlpha.900"
-              boxShadow="md"
+              boxShadow="xl"
               borderRadius="md"
             >
+              <Flex>
+                <FormControl isInvalid={errors.name} mr="3">
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<CFaPen color="gray.300" />}
+                    />
+                    <Input
+                      type="name"
+                      id="name"
+                      placeholder="Name"
+                      {...register("name", {
+                        required: "Name is a compulsory field",
+                      })}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>
+                    {errors.name && errors.name.message}
+                  </FormErrorMessage>
+                </FormControl>
+                <FormControl isInvalid={errors.postal}>
+                  <InputGroup>
+                    <InputLeftElement
+                      pointerEvents="none"
+                      children={<CFaPen color="gray.300" />}
+                    />
+                    <Input
+                      type="postal"
+                      id="postal"
+                      placeholder="Postal"
+                      {...register("postal", {
+                        required: "postal is a compulsory field",
+                      })}
+                    />
+                  </InputGroup>
+                  <FormErrorMessage>
+                    {errors.postal && errors.postal.message}
+                  </FormErrorMessage>
+                </FormControl>
+              </Flex>
               <FormControl isInvalid={errors.email}>
                 <InputGroup>
                   <InputLeftElement
@@ -73,7 +126,7 @@ const Login = () => {
                   <Input
                     type="email"
                     id="email"
-                    placeholder="email address"
+                    placeholder="Email"
                     {...register("email", {
                       required: "Email is a compulsory field",
                     })}
@@ -130,4 +183,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
