@@ -9,17 +9,16 @@ import {
   InputLeftElement,
   chakra,
   Box,
-  Link,
   Icon,
   FormControl,
   FormErrorMessage,
   InputRightElement,
-  Container,
+  Text,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
 import { GiTrade } from "react-icons/gi";
-import NextLink from "next/link";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 
@@ -68,9 +67,9 @@ const Login = () => {
             <Stack
               spacing={4}
               p="1rem"
-              backgroundColor="whiteAlpha.900"
-              boxShadow="xl"
+              boxShadow="2xl"
               borderRadius="md"
+              bg="whitesmoke"
             >
               <FormControl isInvalid={errors.email}>
                 <InputGroup>
@@ -128,8 +127,20 @@ const Login = () => {
                 width="full"
                 isLoading={isSubmitting}
               >
-                Sign up
+                Log in
               </Button>
+              <Text fontWeight={500}>
+                New to TradeEats?{" "}
+                <Link href="/signup">
+                  <Text
+                    display={"inline-block"}
+                    color="teal.500"
+                    style={{ cursor: "pointer" }}
+                  >
+                    Sign up now!
+                  </Text>
+                </Link>
+              </Text>
             </Stack>
           </form>
         </Box>

@@ -38,7 +38,7 @@ export default function SocialProfileWithImage() {
               position="absolute"
               top="130px"
               left="100px"
-              src={"images/placeholder.png"}
+              src={"images/placeholder.jpg"}
               alt={"Author"}
               css={{
                 border: "2px solid white",

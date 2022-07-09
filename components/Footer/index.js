@@ -2,7 +2,6 @@ import {
   Box,
   chakra,
   Container,
-  Link,
   Stack,
   Text,
   useColorModeValue,
@@ -13,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { GiTrade } from "react-icons/gi";
+import Link from "next/link";
 
 const SocialButton = ({ children, label, href }) => {
   return (

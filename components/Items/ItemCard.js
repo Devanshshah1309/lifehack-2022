@@ -68,7 +68,6 @@ import {
   Heading,
   Text,
   Image,
-  Link,
   Skeleton,
   Stack,
   useBreakpointValue,
@@ -77,6 +76,7 @@ import {
 import React, { useState } from "react";
 import TradeDialog from "../TradeDialog";
 import { FavouriteButton } from "./FavouriteButton";
+import Link from "next/link";
 
 const ProductCard = (props) => {
   const {
