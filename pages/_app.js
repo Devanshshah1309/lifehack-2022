@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { Box, ChakraProvider, Flex } from "@chakra-ui/react";
 import { AuthContextProvider } from "../context/AuthContext";
 import { Provider } from "react-redux";
 import store from "../store";
@@ -9,7 +9,9 @@ function MyApp({ Component, pageProps }) {
     <Provider store={store}>
       <AuthContextProvider>
         <ChakraProvider>
-          <Component {...pageProps} />
+          <Box bg="whitesmoke">
+            <Component {...pageProps} />
+          </Box>
         </ChakraProvider>
       </AuthContextProvider>
     </Provider>
