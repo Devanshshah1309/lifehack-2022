@@ -1,25 +1,18 @@
 import {
   Heading,
   Center,
-  Grid,
-  GridItem,
   Box,
-  Stack,
-  Button,
   Text,
-  Flex,
-  Spacer,
-  HStack,
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
 import Image from "next/image";
-import logo from "./../assets/fruits.jpeg";
-import styles from "../styles/Home.module.css";
 import { useRouter } from "next/router";
 import { DesktopNav } from "../components/Navbar";
 
 const img = require("../assets/fruits.jpeg");
+
+import Footer from "../components/Footer/index";
 
 export default function Home() {
   const router = useRouter();
@@ -39,7 +32,7 @@ export default function Home() {
             </Text>
           </VStack>
         </Center>
-        <Image src={logo} alt="Fruits" style={{ borderRadius: 15 }} />
+        <Image src={img} alt="Fruits" style={{ borderRadius: 15 }} />
       </SimpleGrid>
       <Center
         paddingTop={4}
@@ -60,7 +53,7 @@ export default function Home() {
           </Text>
         </VStack>
       </Center>
-      <Text></Text>
+      <Footer />
     </Box>
   );
 }

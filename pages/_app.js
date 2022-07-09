@@ -1,11 +1,22 @@
 import "../styles/globals.css";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Flex } from "@chakra-ui/react";
+import { AuthContextProvider } from "../context/AuthContext";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <ChakraProvider>
-      <Component {...pageProps} />
-    </ChakraProvider>
+    <AuthContextProvider>
+      <ChakraProvider>
+        <Flex
+          flexDirection="column"
+          width="100vw"
+          height="100vh"
+          backgroundColor="gray.300"
+          justifyContent="center"
+        >
+          <Component {...pageProps} />
+        </Flex>
+      </ChakraProvider>
+    </AuthContextProvider>
   );
 }
 
