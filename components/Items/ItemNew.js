@@ -15,11 +15,18 @@ import {
   SimpleGrid,
   GridItem,
   Center,
+  Select,
 } from "@chakra-ui/react";
 import { motion, useAnimation } from "framer-motion";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from "react";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebase/config";
+import { collection, addDoc, doc } from "firebase/firestore";
+import { useAuth } from "../../context/AuthContext";
+import { db } from "../../firebase/config";
+import { useRouter } from "next/router";
 
 const first = {
   rest: {
@@ -116,10 +123,59 @@ const PreviewImage = forwardRef((props, ref) => {
 });
 
 export default function ItemNew() {
+  const [imgUrl, setImgUrl] = useState(null);
+  const [progresspercent, setProgresspercent] = useState(0);
+  const [expiryDate, setExpiryDate] = useState(new Date());
+  const [itemName, setItemName] = useState("");
+  const [itemDescription, setItemDescription] = useState("");
+  const [photo, setPhoto] = useState(null);
+  const [category, setCategory] = useState(null);
+  const { user } = useAuth();
+  const router = useRouter();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!photo) return;
+
+    const storageRef = ref(storage, `${photo.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, photo);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        setProgresspercent(progress);
+      },
+      (error) => {
+        alert(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setImgUrl(downloadURL);
+          const userDocRef = doc(db, "users", user.uid);
+          addDoc(collection(db, "items"), {
+            name: itemName,
+            description: itemDescription,
+            expiryDate: expiryDate,
+            photoURL: downloadURL,
+            owner: userDocRef,
+            title: category,
+          });
+          router.push("/myitems");
+        });
+      }
+    );
+  };
+
+  console.log(imgUrl);
+
   function UploadImage() {
     const controls = useAnimation();
     const startAnimation = () => controls.start("hover");
     const stopAnimation = () => controls.stop();
+
     return (
       <Container alignSelf="center">
         <AspectRatio width="64" ratio={1}>
@@ -199,15 +255,11 @@ export default function ItemNew() {
       </Container>
     );
   }
-  const [expiryDate, setExpiryDate] = useState(new Date());
-  const [itemName, setItemName] = useState("");
-  const [itemDescription, setItemDescription] = useState("");
-  const [photo, setPhoto] = useState(null);
+
   // get all items owned by the user and pass it to Items component
 
-  const handleSubmit = () => undefined;
   return (
-    <VStack paddingLeft={10} width="100%">
+    <VStack width="100%">
       <Heading style={{ verticalAlign: "top" }}>Add a new item</Heading>
       <Flex align="center">
         <form onSubmit={handleSubmit}>
@@ -215,7 +267,26 @@ export default function ItemNew() {
             <SimpleGrid columns={2} rowGap={4} padding={4}>
               <Center>
                 <GridItem>
-                  <Text>Item Name</Text>
+                  <Text fontSize="lg" fontWeight={"extrabold"}>
+                    Item Name
+                  </Text>
+                </GridItem>
+              </Center>
+              <Select
+                placeholder="Select option"
+                onChange={(e) => {
+                  setCategory(e.target.value);
+                }}
+              >
+                <option value="Dairy">Dairy</option>
+                <option value="Spicy">Spicy</option>
+                <option value="Expiring">Expiring soon</option>
+              </Select>
+              <Center>
+                <GridItem>
+                  <Text fontSize="lg" fontWeight={"extrabold"}>
+                    Item Name
+                  </Text>
                 </GridItem>
               </Center>
               <Input
@@ -224,7 +295,9 @@ export default function ItemNew() {
               ></Input>
               <Center>
                 <GridItem>
-                  <Text>Item Description</Text>
+                  <Text fontSize="lg" fontWeight={"extrabold"}>
+                    Item Description
+                  </Text>
                 </GridItem>
               </Center>
               <Input
@@ -233,7 +306,9 @@ export default function ItemNew() {
               ></Input>
               <Center>
                 <GridItem>
-                  <Text>Expiry Date</Text>
+                  <Text fontSize="lg" fontWeight={"extrabold"}>
+                    Expiry Date
+                  </Text>
                 </GridItem>
               </Center>
               <GridItem>
@@ -245,7 +320,9 @@ export default function ItemNew() {
               </GridItem>
               <Center>
                 <GridItem>
-                  <Text>Photo</Text>
+                  <Text fontSize="lg" fontWeight={"extrabold"}>
+                    Photo
+                  </Text>
                 </GridItem>
               </Center>
               <GridItem>
@@ -265,7 +342,8 @@ export default function ItemNew() {
                 backgroundColor="teal.500"
                 padding={2}
                 m={2}
-                onClick={() => console.log(photo)}
+                onSubmit={handleSubmit}
+                type="submit"
                 disabled={itemName === "" || itemDescription === ""}
               >
                 Add
