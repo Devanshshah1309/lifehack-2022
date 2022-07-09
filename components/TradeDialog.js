@@ -12,16 +12,15 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-export const TradeDialog = (
+const TradeDialog = ({
   isOpen,
   onClose,
-  image,
   itemName,
+  title,
   location,
   expiryDate,
-  ownerName,
-  description
-) => {
+  description,
+}) => {
   const router = useRouter();
 
   const handleChat = () => {
@@ -36,9 +35,12 @@ export const TradeDialog = (
   return (
     <>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
         <ModalContent>
-          <ModalHeader>Food</ModalHeader>
+          <ModalHeader>{title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={3}>
@@ -46,7 +48,6 @@ export const TradeDialog = (
               <Text fontSize="md">{`Location: ${location}`}</Text>
               <Text fontSize="md">{`Expiry Date: ${expiryDate}`}</Text>
               <Text fontSize="md">{`Item Description: ${description}`}</Text>
-              <Text fontSize="md">{`Owner name: ${ownerName}`}</Text>
             </Stack>
           </ModalBody>
           <ModalFooter>
@@ -63,3 +64,5 @@ export const TradeDialog = (
     </>
   );
 };
+
+export default TradeDialog;

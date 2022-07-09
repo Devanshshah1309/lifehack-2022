@@ -14,6 +14,7 @@ import {
   FormControl,
   FormErrorMessage,
   InputRightElement,
+  Container,
 } from "@chakra-ui/react";
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { useAuth } from "../context/AuthContext";
@@ -46,7 +47,12 @@ const Login = () => {
   };
 
   return (
-    <Flex flexDirection="column" alignItems="center">
+    <Flex
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
       <Stack
         flexDir="column"
         mb="2"
@@ -63,7 +69,7 @@ const Login = () => {
               spacing={4}
               p="1rem"
               backgroundColor="whiteAlpha.900"
-              boxShadow="md"
+              boxShadow="xl"
               borderRadius="md"
             >
               <FormControl isInvalid={errors.email}>
@@ -75,7 +81,7 @@ const Login = () => {
                   <Input
                     type="email"
                     id="email"
-                    placeholder="email address"
+                    placeholder="Email"
                     {...register("email", {
                       required: "Email is a compulsory field",
                     })}
@@ -122,18 +128,12 @@ const Login = () => {
                 width="full"
                 isLoading={isSubmitting}
               >
-                Login
+                Sign up
               </Button>
             </Stack>
           </form>
         </Box>
       </Stack>
-      <Box>
-        New to us?
-        <NextLink href={"/signup"} passHref>
-          <Link color="teal.500"> Sign up</Link>
-        </NextLink>
-      </Box>
     </Flex>
   );
 };

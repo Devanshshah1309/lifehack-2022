@@ -2,7 +2,6 @@ import {
   Box,
   Flex,
   HStack,
-  Link,
   IconButton,
   Button,
   useDisclosure,
@@ -10,9 +9,14 @@ import {
   Icon,
   Text,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import CallToActionWithIllustration from "../Landing";
 import { GiTrade } from "react-icons/gi";
+import React, { useEffect, useState } from "react";
+import { db } from "../../firebase/config";
+import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from "../../context/AuthContext";
+import Link from "next/link";
 
 const Links = ["About", "Contact"];
 
@@ -32,6 +36,28 @@ const NavLink = ({ children }) => (
 
 export default function withAction() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useAuth();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const getUserInformation = async () => {
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const userData = docSnap.data();
+        setUserData({
+          ...userData,
+          registeredAt: userData.registeredAt
+            .toDate()
+            .toISOString()
+            .substring(0, 10),
+        });
+      } else {
+        console.log("This document does not exists");
+      }
+    };
+    getUserInformation();
+  }, []);
 
   return (
     <>
@@ -63,7 +89,11 @@ export default function withAction() {
           </HStack>
           <Flex alignItems={"center"}>
             <Button variant={"solid"} colorScheme={"teal"} size={"sm"} mr={4}>
-              LOG IN
+              {user ? (
+                <Link href="/marketplace">TO MARKETPLACE</Link>
+              ) : (
+                <Link href="/login">LOG IN</Link>
+              )}
             </Button>
           </Flex>
         </Flex>
