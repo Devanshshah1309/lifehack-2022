@@ -24,7 +24,7 @@ export const DesktopNav = () => {
   const NAV_ITEMS = [
     {
       label: "Sign up",
-      onClick: () => router.push("/sign_up"),
+      onClick: () => router.push("/signup"),
     },
     {
       label: "Login",
@@ -52,7 +52,7 @@ export const DesktopNav = () => {
               {navItem.label}
             </Link>
           ) : (
-            <Button bgColor="teal.500">
+            <Button bgColor="teal.500" onClick={navItem.onClick}>
               <Text fontSize={"xl"} fontWeight={500}>
                 {navItem.label}
               </Text>
