@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import {
   Flex,
   Heading,
@@ -46,14 +46,7 @@ const Login = () => {
   };
 
   return (
-    <Flex
-      flexDirection="column"
-      width="100wh"
-      height="100vh"
-      backgroundColor="gray.300"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <Flex flexDirection="column" alignItems="center">
       <Stack
         flexDir="column"
         mb="2"
