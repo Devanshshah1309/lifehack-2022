@@ -5,10 +5,13 @@ import { useAuth } from "../context/AuthContext";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import { doc, getDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { userAction } from "../store/reducers/users";
 
 export default function Marketplace() {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getUserInformation = async () => {
@@ -29,6 +32,10 @@ export default function Marketplace() {
     };
     getUserInformation();
   }, []);
+
+  useEffect(() => {
+    dispatch(userAction.saveUserState({ user: userData }));
+  }, [userData]);
 
   return (
     <Flex>

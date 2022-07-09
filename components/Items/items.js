@@ -2,69 +2,22 @@ import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import ProductGrid from "./ItemGrid";
-
-const itemsArr = [
-  {
-    name: "Apples",
-    expiry: "14/07/2022",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-    imageUrl: "/images/milk.jpg",
-  },
-  {
-    name: "Apples",
-    expiry: "14/07/2022",
-    imageUrl: "/images/milk.jpg",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-  },
-  {
-    name: "Apples",
-    expiry: "14/07/2022",
-    imageUrl: "/images/milk.jpg",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-  },
-  {
-    imageUrl: "/images/milk.jpg",
-    name: "Apples",
-    expiry: "14/07/2022",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-  },
-  {
-    imageUrl: "/images/milk.jpg",
-    name: "Apples",
-    expiry: "14/07/2022",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-  },
-  {
-    name: "Apples",
-    imageUrl: "/images/milk.jpg",
-    expiry: "14/07/2022",
-    distance: "1000m",
-    title: "Apples rotting soon!",
-    description:
-      "A super long diwahdoiahdw dahwoidhwa dadw wdihwao dhawoidha wdaih oda",
-  },
-];
+import { db } from "../../firebase/config";
+import { collection, getDocs } from "firebase/firestore";
+import { itemsArr } from "../../mockdata";
 
 export default function Items() {
   const [items, setItems] = useState(itemsArr);
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => setItems(itemsArr), []);
+  useEffect(() => {
+    const getItems = async () => {
+      const itemsSnapshot = await getDocs(collection(db, "items"));
+      const itemsList = itemsSnapshot.docs.map((doc) => doc.data());
+      setItems(itemsList);
+    };
+    getItems();
+  }, []);
 
   console.log(items);
 
@@ -84,8 +37,8 @@ export default function Items() {
               distance={item.distance}
               description={item.description}
               title={item.title}
-              expiry={item.expiry}
-              imageUrl={item.imageUrl}
+              expiry={item.expiryDate?.toDate().toISOString().substring(0, 10)}
+              imageUrl={item.photoURL}
               isOpen={isOpen}
               onClose={() => setIsOpen(false)}
               onClick={() => setIsOpen(true)}
