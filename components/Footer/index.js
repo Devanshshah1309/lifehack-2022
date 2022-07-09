@@ -54,7 +54,6 @@ export default function SmallCentered() {
           <Heading color="teal.500">TradeEats</Heading>
         </Flex>
         <Stack direction={"row"} spacing={6}>
-          <Link href={"/"}>Marketplace</Link>
           <Link href={"/"}>About</Link>
           <Link href={"/"}>Contact</Link>
         </Stack>

@@ -35,6 +35,16 @@ export default function CallToActionWithIllustration() {
             51,000 double decker buses.
           </Text>
         </Text>
+        <Text>
+          When we heard the amount of food wastage in Singapore, we knew we had
+          to act. There wasn't any time to lose. So, we started TradeEats - a
+          simple app that allows you to share your food with others when you
+          know you're not going to be able to finish it.
+        </Text>
+        <Text as="b" fontSize="xl">
+          Our mission is crystal clear.{" "}
+          <Text color={"teal.500"}>SAVE FOOD, SAVE THE WORLD.</Text>
+        </Text>
         <Stack spacing={6} direction={"row"}>
           <Button
             rounded={"full"}

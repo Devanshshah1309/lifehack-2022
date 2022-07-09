@@ -21,18 +21,20 @@ import {
 import { BsChatLeftDots } from "react-icons/bs";
 import { FiMenu } from "react-icons/fi";
 import { GiTrade } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 const LinkItems = [
-  { name: "Profile", icon: CgProfile },
-  { name: "Marketplace", icon: CgShoppingCart },
+  { name: "Profile", icon: CgProfile, path: "/profile" },
+  { name: "Marketplace", icon: CgShoppingCart, path: "marketplace" },
   { name: "Requests", icon: CgArrowsExchange },
   { name: "Messages", icon: BsChatLeftDots },
-  { name: "My Items", icon: CgHome },
+  { name: "My Items", icon: CgHome, path: "myitems" },
 ];
 const Sidebar = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" boxShadow={"lg"}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -51,34 +53,24 @@ const Sidebar = ({ children }) => {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav display={{ base: "flex", md: "none" }} onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {children}
-      </Box>
+      <MobileNav display={{ base: "base", md: "none" }} onOpen={onOpen} />
+      <Box ml={{ base: 0, md: 60 }} />
     </Box>
   );
 };
 
 const SidebarContent = ({ onClose, ...rest }) => {
   return (
-    <Box
-      bg={useColorModeValue("gray.100", "gray.900")}
-      // borderRight="1px"
-      // borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
-      pos="fixed"
-      h="full"
-      {...rest}
-    >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Icon as={GiTrade} boxSize="2rem" color="teal.500" />
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+    <Box w={{ base: "full", md: 60 }} pos="fixed" h="full" {...rest}>
+      <Flex alignItems="center" justifyContent="start" m="6">
+        <Icon as={GiTrade} boxSize="2rem" color="teal.500" m="2" />
+        <Text fontSize="2xl" color="teal.500" fontWeight="bold">
           TradeEats
         </Text>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+        <CloseButton display={{ base: "auto", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} path={link.path}>
           {link.name}
         </NavItem>
       ))}
@@ -86,10 +78,10 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ icon, children, path, ...rest }) => {
   return (
     <Link
-      href="#"
+      href={path === undefined ? "#" : path}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -101,7 +93,7 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "teal.500",
           color: "white",
         }}
         {...rest}
@@ -126,13 +118,12 @@ const MobileNav = ({ onOpen, ...rest }) => {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
-      px={{ base: 4, md: 24 }}
+      px={{ base: 3, md: 24 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-      justifyContent="flex-start"
+      justifyContent="center"
       {...rest}
     >
       <IconButton
@@ -142,8 +133,8 @@ const MobileNav = ({ onOpen, ...rest }) => {
         icon={<FiMenu />}
       />
 
-      <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-        Logo
+      <Text fontSize="xl" color="teal.500" fontWeight="bold">
+        TradeEats
       </Text>
     </Flex>
   );
