@@ -19,8 +19,6 @@ import {
 import { useRouter } from "next/router";
 
 export const DesktopNav = () => {
-  const linkColor = useColorModeValue("gray.600", "gray.200");
-  const linkHoverColor = useColorModeValue("gray.800", "white");
   const router = useRouter();
 
   const NAV_ITEMS = [
@@ -40,20 +38,26 @@ export const DesktopNav = () => {
   return (
     <Flex spacing={4} flexDirection="row-reverse">
       {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label}>
-          <Link
-            p={8}
-            href={navItem.href ?? "#"}
-            fontSize={"2xl"}
-            fontWeight={500}
-            color={linkColor}
-            _hover={{
-              textDecoration: "none",
-              color: linkHoverColor,
-            }}
-          >
-            {navItem.label}
-          </Link>
+        <Box key={navItem.label} padding={4}>
+          {navItem.onClick === undefined ? (
+            <Link
+              p={8}
+              href={navItem.href ?? "#"}
+              fontSize={"xl"}
+              fontWeight={500}
+              _hover={{
+                textDecoration: "none",
+              }}
+            >
+              {navItem.label}
+            </Link>
+          ) : (
+            <Button bgColor="teal.500">
+              <Text fontSize={"xl"} fontWeight={500}>
+                {navItem.label}
+              </Text>
+            </Button>
+          )}
         </Box>
       ))}
     </Flex>
