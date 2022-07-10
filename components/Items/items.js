@@ -39,19 +39,25 @@ export default function Items() {
       <ProductGrid>
         {items.map((item, index) => {
           return (
-            <ItemCard
-              key={index}
-              id={item?.id}
-              name={item?.name}
-              address={user?.address}
-              description={item?.description}
-              title={item?.title}
-              expiry={item?.expiryDate?.toDate().toISOString().substring(0, 10)}
-              imageUrl={item?.photoURL}
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              onClick={() => setIsOpen(true)}
-            />
+            !item.onTrade && (
+              <ItemCard
+                key={index}
+                id={item?.id}
+                name={item?.name}
+                address={user?.address}
+                description={item?.description}
+                title={item?.title}
+                owner={item.owner}
+                expiry={item?.expiryDate
+                  ?.toDate()
+                  .toISOString()
+                  .substring(0, 10)}
+                imageUrl={item?.photoURL}
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onClick={() => setIsOpen(true)}
+              />
+            )
           );
         })}
       </ProductGrid>

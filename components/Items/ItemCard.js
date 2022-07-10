@@ -95,6 +95,7 @@ const ProductCard = (props) => {
         expiryDate={expiry}
         description={description}
         owner={owner}
+        itemId={id}
       />
     </>
   );
