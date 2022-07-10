@@ -49,16 +49,20 @@ export default function SocialProfileWithImage() {
           <Box p={8} ml="10">
             <Stack spacing={0} align={"center"} mb={5}>
               <Heading fontSize={"2xl"} fontWeight={500} fontFamily={"body"}>
-                {user.name}
+                {user?.name}
               </Heading>
-              <Text color={"gray.500"}>{user.email}</Text>
+              <Text color={"gray.500"}>{user?.email}</Text>
             </Stack>
 
             <Stack direction={"row"} justify={"center"} spacing={6}>
-              <Text fontWeight={600}>{"Address: " + user.postal}</Text>
+              <Stack spacing={0} align={"center"}>
+                <Text fontWeight={600}>{user?.postal}</Text>
+              </Stack>
             </Stack>
             <Stack direction={"row"} justify={"center"} spacing={6}>
-              <Text fontWeight={600}>{"Contact: " + user.contact}</Text>
+              <Stack spacing={0} align={"center"}>
+                <Text fontWeight={600}>{user?.contact}</Text>
+              </Stack>
             </Stack>
 
             <Button
