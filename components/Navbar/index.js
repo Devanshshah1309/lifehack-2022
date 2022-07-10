@@ -40,23 +40,25 @@ export default function withAction() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const getUserInformation = async () => {
-      const docRef = doc(db, "users", user.uid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const userData = docSnap.data();
-        setUserData({
-          ...userData,
-          registeredAt: userData.registeredAt
-            .toDate()
-            .toISOString()
-            .substring(0, 10),
-        });
-      } else {
-        console.log("This document does not exists");
-      }
-    };
-    getUserInformation();
+    if (user) {
+      const getUserInformation = async () => {
+        const docRef = doc(db, "users", user?.uid);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const userData = docSnap.data();
+          setUserData({
+            ...userData,
+            registeredAt: userData.registeredAt
+              .toDate()
+              .toISOString()
+              .substring(0, 10),
+          });
+        } else {
+          console.log("This document does not exists");
+        }
+      };
+      getUserInformation();
+    }
   }, []);
 
   return (
