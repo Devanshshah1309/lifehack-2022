@@ -55,7 +55,7 @@ const TradeDialog = ({
               Chat
             </Button>
             <Button colorScheme="green" mr={3} onClick={handleTrade}>
-              Trade
+              Request
             </Button>
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
