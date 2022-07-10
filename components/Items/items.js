@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import ProductGrid from "./ItemGrid";
 import { db } from "../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 import { itemsArr } from "../../mockdata";
 import { useDispatch, useSelector } from "react-redux";
 import { itemsAction } from "../../store/reducers/items";
@@ -39,19 +39,25 @@ export default function Items() {
       <ProductGrid>
         {items.map((item, index) => {
           return (
-            <ItemCard
-              key={index}
-              id={item?.id}
-              name={item?.name}
-              address={user?.address}
-              description={item?.description}
-              title={item?.title}
-              expiry={item?.expiryDate?.toDate().toISOString().substring(0, 10)}
-              imageUrl={item?.photoURL}
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              onClick={() => setIsOpen(true)}
-            />
+            !item.onTrade && (
+              <ItemCard
+                key={index}
+                id={item?.id}
+                name={item?.name}
+                address={user?.address}
+                description={item?.description}
+                title={item?.title}
+                owner={item.owner}
+                expiry={item?.expiryDate
+                  ?.toDate()
+                  .toISOString()
+                  .substring(0, 10)}
+                imageUrl={item?.photoURL}
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onClick={() => setIsOpen(true)}
+              />
+            )
           );
         })}
       </ProductGrid>

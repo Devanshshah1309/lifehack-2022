@@ -266,7 +266,7 @@ export default function ItemNew() {
               <Center>
                 <GridItem>
                   <Text fontSize="lg" fontWeight={"extrabold"}>
-                    Item Name
+                    Item Category
                   </Text>
                 </GridItem>
               </Center>
@@ -277,8 +277,10 @@ export default function ItemNew() {
                 }}
               >
                 <option value="Dairy">Dairy</option>
-                <option value="Spicy">Spicy</option>
-                <option value="Expiring">Expiring soon</option>
+                <option value="Fruits">Fruits</option>
+                <option value="Vegetables">Vegetables</option>
+                <option value="Others">Others</option>
+                {/* <option value="Expiring">Expiring soon</option> */}
               </Select>
               <Center>
                 <GridItem>
