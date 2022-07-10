@@ -55,12 +55,10 @@ export default function SocialProfileWithImage() {
             </Stack>
 
             <Stack direction={"row"} justify={"center"} spacing={6}>
-              <Stack spacing={0} align={"center"}>
-                <Text fontWeight={600}>{user.postal}</Text>
-                <Text fontSize={"sm"} color={"gray.500"}>
-                  Postal
-                </Text>
-              </Stack>
+              <Text fontWeight={600}>{"Address: " + user.postal}</Text>
+            </Stack>
+            <Stack direction={"row"} justify={"center"} spacing={6}>
+              <Text fontWeight={600}>{"Contact: " + user.contact}</Text>
             </Stack>
 
             <Button
