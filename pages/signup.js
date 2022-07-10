@@ -54,7 +54,7 @@ const SignUp = () => {
         setDoc(doc(db, "users", user.uid), {
           email: user.email,
           registeredAt: Timestamp.fromDate(new Date()),
-          postal: values.postal,
+          address: values.address,
           name: values.name,
           contact: values.contact,
         });
@@ -111,23 +111,23 @@ const SignUp = () => {
                     {errors.contact && errors.contact.message}
                   </FormErrorMessage>
                 </FormControl>
-                <FormControl isInvalid={errors.postal}>
+                <FormControl isInvalid={errors.address}>
                   <InputGroup>
                     <InputLeftElement
                       pointerEvents="none"
                       children={<CFaAddressBook color="gray.300" />}
                     />
                     <Input
-                      type="postal"
-                      id="postal"
-                      placeholder="Postal"
-                      {...register("postal", {
-                        required: "postal is a compulsory field",
+                      type="address"
+                      id="address"
+                      placeholder="Address"
+                      {...register("address", {
+                        required: "Address is a compulsory field",
                       })}
                     />
                   </InputGroup>
                   <FormErrorMessage>
-                    {errors.postal && errors.postal.message}
+                    {errors.address && errors.address.message}
                   </FormErrorMessage>
                 </FormControl>
               </Flex>

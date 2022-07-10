@@ -5,10 +5,12 @@ import ProductGrid from "./ItemGrid";
 import { db } from "../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { itemsArr } from "../../mockdata";
+import { useSelector } from "react-redux";
 
 export default function Items() {
   const [items, setItems] = useState(itemsArr);
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     const getItems = async () => {
@@ -18,8 +20,6 @@ export default function Items() {
     };
     getItems();
   }, []);
-
-  console.log(items);
 
   return (
     <Box
@@ -34,7 +34,7 @@ export default function Items() {
             <ItemCard
               key={index}
               name={item.name}
-              distance={item.distance}
+              address={user?.address}
               description={item.description}
               title={item.title}
               expiry={item.expiryDate?.toDate().toISOString().substring(0, 10)}
