@@ -27,6 +27,7 @@ const ProductCard = (props) => {
     onClose,
     onClick,
     description,
+    owner,
   } = props;
 
   console.log(id);
@@ -93,6 +94,8 @@ const ProductCard = (props) => {
         title={title}
         expiryDate={expiry}
         description={description}
+        owner={owner}
+        itemId={id}
       />
     </>
   );
