@@ -16,6 +16,10 @@ export default function Items() {
     const getItems = async () => {
       const itemsSnapshot = await getDocs(collection(db, "items"));
       const itemsList = itemsSnapshot.docs.map((doc) => doc.data());
+      itemsSnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+      });
       setItems(itemsList);
     };
     getItems();
