@@ -5,20 +5,24 @@ import ProductGrid from "./ItemGrid";
 import { db } from "../../firebase/config";
 import { collection, getDocs } from "firebase/firestore";
 import { itemsArr } from "../../mockdata";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { itemsAction } from "../../store/reducers/items";
 
 export default function Items() {
   const [items, setItems] = useState(itemsArr);
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getItems = async () => {
+      const itemsMap = {};
       const itemsSnapshot = await getDocs(collection(db, "items"));
-      const itemsList = itemsSnapshot.docs.map((doc) => doc.data());
+      const itemsList = itemsSnapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      });
       itemsSnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
+        itemsMap[doc.id] = doc.data();
       });
       setItems(itemsList);
     };
@@ -37,12 +41,13 @@ export default function Items() {
           return (
             <ItemCard
               key={index}
-              name={item.name}
+              id={item?.id}
+              name={item?.name}
               address={user?.address}
-              description={item.description}
-              title={item.title}
-              expiry={item.expiryDate?.toDate().toISOString().substring(0, 10)}
-              imageUrl={item.photoURL}
+              description={item?.description}
+              title={item?.title}
+              expiry={item?.expiryDate?.toDate().toISOString().substring(0, 10)}
+              imageUrl={item?.photoURL}
               isOpen={isOpen}
               onClose={() => setIsOpen(false)}
               onClick={() => setIsOpen(true)}

@@ -6,7 +6,8 @@ const itemsSlice = createSlice({
     items: {},
   },
   reducers: {
-    saveUserState(state, { payload }) {
+    saveItemsState(state, { payload }) {
+      console.log(payload);
       state.items = payload.items;
     },
   },

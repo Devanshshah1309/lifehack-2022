@@ -18,6 +18,7 @@ import Link from "next/link";
 const ProductCard = (props) => {
   const {
     name,
+    id,
     address,
     expiry,
     imageUrl,
@@ -27,6 +28,8 @@ const ProductCard = (props) => {
     onClick,
     description,
   } = props;
+
+  console.log(id);
 
   return (
     <>
