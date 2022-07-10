@@ -10,7 +10,12 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { async } from "@firebase/util";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+
 import { useRouter } from "next/router";
+import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase/config";
 
 const TradeDialog = ({
   isOpen,
@@ -20,16 +25,24 @@ const TradeDialog = ({
   location,
   expiryDate,
   description,
+  owner,
 }) => {
   const router = useRouter();
-
+  const { user } = useAuth();
   const handleChat = () => {
     return router.push("/chat");
   };
 
-  // TODO
-  const handleTrade = () => {
-    console.log("Trade");
+  const handleTrade = async (e) => {
+    e.preventDefault();
+    db.collection("items").doc();
+    addDoc(collection(db, "trades"), {
+      buyerId: user.uid,
+      tradeCloseAt: null,
+      tradeStartAt: Timestamp.now(),
+      tradeStatus: 0,
+      traderId: owner,
+    });
   };
 
   return (

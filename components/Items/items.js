@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ItemCard from "./ItemCard";
 import ProductGrid from "./ItemGrid";
 import { db } from "../../firebase/config";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, doc, getDocs } from "firebase/firestore";
 import { itemsArr } from "../../mockdata";
 
 export default function Items() {
@@ -13,7 +13,8 @@ export default function Items() {
   useEffect(() => {
     const getItems = async () => {
       const itemsSnapshot = await getDocs(collection(db, "items"));
-      const itemsList = itemsSnapshot.docs.map((doc) => doc.data());
+      // const itemsList = itemsSnapshot.docs.map((doc) => doc.data());
+      const itemList = itemsSnapshot.forEach((doc) => doc.data());
       setItems(itemsList);
     };
     getItems();
@@ -31,18 +32,24 @@ export default function Items() {
       <ProductGrid>
         {items.map((item, index) => {
           return (
-            <ItemCard
-              key={index}
-              name={item.name}
-              distance={item.distance}
-              description={item.description}
-              title={item.title}
-              expiry={item.expiryDate?.toDate().toISOString().substring(0, 10)}
-              imageUrl={item.photoURL}
-              isOpen={isOpen}
-              onClose={() => setIsOpen(false)}
-              onClick={() => setIsOpen(true)}
-            />
+            !item.onTrade && (
+              <ItemCard
+                key={index}
+                name={item.name}
+                distance={item.distance}
+                description={item.description}
+                title={item.title}
+                expiry={item.expiryDate
+                  ?.toDate()
+                  .toISOString()
+                  .substring(0, 10)}
+                imageUrl={item.photoURL}
+                owner={item.owner}
+                isOpen={isOpen}
+                onClose={() => setIsOpen(false)}
+                onClick={() => setIsOpen(true)}
+              />
+            )
           );
         })}
       </ProductGrid>
