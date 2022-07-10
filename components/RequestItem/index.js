@@ -1,46 +1,46 @@
-import { TabList, TabPanel, Tab, Tabs, TabPanels } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import {
+  TabList,
+  TabPanel,
+  Tab,
+  Tabs,
+  TabPanels,
+  Flex,
+  Container,
+} from "@chakra-ui/react";
 import RequestItemCard from "./RequestItemCard";
-import { db } from "../../firebase/config";
-import { collection, query, where, getDocs, doc } from "firebase/firestore";
-import { useAuth } from "../../context/AuthContext";
 
-function Request() {
-  const { user } = useAuth();
-  const [currItems, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   const getUserItems = async () => {
-  //     const userDocRef = doc(db, "users", user.uid);
-
-  //     const buyer = query(
-  //       collection(db, "trades"),
-  //       where("buyerId", "==", userDocRef)
-  //     );
-  //     const owner = query(
-  //       collection(db, "trades"),
-  //       where("traderId", "==", userDocRef)
-  //     );
-
-  //     const querySnapshot = await getDocs(buyer);
-  //     const querySnapshot2 = await getDocs(owner);
-
-  //     const buyerList = querySnapshot.docs.map((doc) => doc.data());
-  //     const ownerList = querySnapshot2.docs.map((doc) => doc.data());
-  //     const list = [...buyerList, ...ownerList];
-  //     const newList = list.map((doc) => {
-  //       return {
-  //         ...doc,
-  //         buyerId: doc.buyerId.id,
-  //         traderId: doc.traderId.id,
-  //       };
-  //     });
-
-  //     setItems(newList);
-  //     getUserItems();
-  //   };
-  //   getUserItems();
-  // }, []);
+export default function Request() {
+  // get all items from firebase
+  const items = [
+    {
+      name: "Apples",
+      expiry: "14/07/2022",
+      owner: "John",
+      requestor: "Tom",
+      status: 0,
+    },
+    {
+      name: "Banana",
+      expiry: "14/07/2022",
+      owner: "John",
+      requestor: "Tom",
+      status: 1,
+    },
+    {
+      name: "Watermelon",
+      expiry: "14/07/2022",
+      owner: "Tom",
+      requestor: "John",
+      status: 1,
+    },
+    {
+      name: "Orange",
+      expiry: "14/07/2022",
+      owner: "Tom",
+      requestor: "John",
+      status: 0,
+    },
+  ];
 
   return (
     <Tabs
@@ -56,43 +56,36 @@ function Request() {
       </TabList>
       <TabPanels>
         <TabPanel>
-          {currItems.map(
+          {items.map(
             (item, index) =>
-              item.tradeStatus == 0 && (
+              item.status == 0 && (
                 <RequestItemCard
                   key={index}
-                  tradeStartAt={item.tradeStartAt
-                    ?.toDate()
-                    .toISOString()
-                    .substring(0, 10)}
-                  owner={item.traderId}
-                  requestor={item.buyerId}
-                  status={item.tradeStatus}
+                  name={item.name}
+                  expiryDate={item.expiry}
+                  owner={item.owner}
+                  requestor={item.requestor}
+                  status={item.status}
                 />
               )
           )}
         </TabPanel>
         <TabPanel>
-          {currItems.map((item, index) => {
-            return (
+          {items.map(
+            (item, index) =>
               item.status == 1 && (
                 <RequestItemCard
                   key={index}
-                  tradeStartAt={item.tradeStartAt
-                    ?.toDate()
-                    .toISOString()
-                    .substring(0, 10)}
-                  owner={item.traderId}
-                  requestor={item.buyerId}
-                  status={item.tradeStatus}
+                  name={item.name}
+                  expiryDate={item.expiry}
+                  owner={item.owner}
+                  requestor={item.requestor}
+                  status={item.status}
                 />
               )
-            );
-          })}
+          )}
         </TabPanel>
       </TabPanels>
     </Tabs>
   );
 }
-
-export default Request;

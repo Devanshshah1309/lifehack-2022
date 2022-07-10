@@ -154,7 +154,7 @@ export default function ItemNew() {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImgUrl(downloadURL);
-          const userDocRef = doc(db, "users", user?.uid);
+          const userDocRef = doc(db, "users", user.uid);
           addDoc(collection(db, "items"), {
             name: itemName,
             description: itemDescription,
@@ -168,6 +168,8 @@ export default function ItemNew() {
       }
     );
   };
+
+  console.log(imgUrl);
 
   function UploadImage() {
     const controls = useAnimation();

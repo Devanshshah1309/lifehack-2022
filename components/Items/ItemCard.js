@@ -30,6 +30,8 @@ const ProductCard = (props) => {
     owner,
   } = props;
 
+  console.log(id);
+
   return (
     <>
       <Stack
