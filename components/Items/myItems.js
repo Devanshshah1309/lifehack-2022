@@ -14,20 +14,17 @@ export default function MyItems() {
 
   useEffect(() => {
     const getUserItems = async () => {
-      const userDocRef = doc(db, "users", user.uid);
+      const userDocRef = doc(db, "users", user?.uid);
       const q = query(
         collection(db, "items"),
         where("owner", "==", userDocRef)
       );
       const querySnapshot = await getDocs(q);
-      console.log(querySnapshot);
       const itemsList = querySnapshot.docs.map((doc) => doc.data());
       setItems(itemsList);
     };
     getUserItems();
   }, [user]);
-
-  console.log(items);
 
   return (
     <Box
@@ -38,7 +35,6 @@ export default function MyItems() {
     >
       <ProductGrid>
         {items.map((item, index) => {
-          console.log(item.photoURL);
           return (
             <ItemCard
               key={index}

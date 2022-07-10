@@ -29,8 +29,6 @@ const ProductCard = (props) => {
     description,
   } = props;
 
-  console.log(id);
-
   return (
     <>
       <Stack

@@ -7,13 +7,14 @@ import { getStorage } from "firebase/storage";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDzJLs7Is-c1BtGG9rjpZl7vX-_Dctwtn4",
-  authDomain: "fir-livehack.firebaseapp.com",
-  projectId: "fir-livehack",
-  storageBucket: "fir-livehack.appspot.com",
-  messagingSenderId: "762732063865",
-  appId: "1:762732063865:web:81367e8cddaba33ab978a8",
+  apiKey: "AIzaSyDA3aUD2ffM8HI5bq-9UgQvm4S4zxd0pUQ",
+  authDomain: "trade-eats.firebaseapp.com",
+  projectId: "trade-eats",
+  storageBucket: "trade-eats.appspot.com",
+  messagingSenderId: "438829504560",
+  appId: "1:438829504560:web:ddd616631ac83e8f6375f5",
 };
 
 // Initialize Firebase

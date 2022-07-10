@@ -1,9 +1,9 @@
 import { Button, useColorModeValue, Box, Text, Flex } from "@chakra-ui/react";
+import { useEffect } from "react";
 import { useAuth } from "../../context/AuthContext";
 
 export default function RequestItemCard({
-  name,
-  expiryDate,
+  tradeStartAt,
   owner,
   requestor,
   status,
@@ -38,7 +38,7 @@ export default function RequestItemCard({
       <Flex flexDirection="column">
         <Box display={"flex"} flexDirection="column" alignItems={"center"}>
           <Text color={"black.500"} fontSize={"md"}>
-            {name} expiring on <b>{expiryDate}</b>
+            {name} started trade on <b>{tradeStartAt}</b>
           </Text>
           {isOwner && (
             <Text color={"black.500"} fontSize={"sm"}>

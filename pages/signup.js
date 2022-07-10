@@ -47,7 +47,6 @@ const SignUp = () => {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const handleSignupClick = async (values) => {
-    console.log(values);
     try {
       await signup(values.email, values.password).then((userCredential) => {
         const user = userCredential.user;
